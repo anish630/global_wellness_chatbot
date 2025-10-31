@@ -1,5 +1,5 @@
 import streamlit as st
-import sqlite3, bcrypt, jwt, datetime, joblib, os, json
+import sqlite3, bcrypt, jwt, datetime, joblib, os, json, subprocess
 # from pyngrok import ngrok  # Not needed for Streamlit Cloud
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -16,7 +16,14 @@ import plotly.express as px
 # -----------------------------
 SECRET_KEY = "wellness_secret_key"
 translator = Translator()
-nlp = spacy.load("en_core_web_sm")
+
+# Load spaCy model with auto-download if needed
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    st.warning("Downloading spaCy model... This may take a few minutes on first run.")
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"], check=True)
+    nlp = spacy.load("en_core_web_sm")
 
 # Admin credentials (hard-coded per requirement)
 ADMIN_EMAIL = "anish@gmail.com"
