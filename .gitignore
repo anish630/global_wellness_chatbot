@@ -45,8 +45,9 @@ wheels/
 .DS_Store
 Thumbs.db
 
-# Streamlit
-.streamlit/
+# Streamlit (but keep config.toml)
+.streamlit/secrets.toml
+.streamlit/credentials.toml
 
 # Secrets and keys
 *.key
